@@ -5,8 +5,11 @@
 # The stack used is a realistic implementation using Dictionaries, and has
 # the same pros and cons and functional applications of a real stack
 #################################
+import turtle
+turtle.ht()
 
 MAX_STACK_LEN = 12
+BOX_SIZE = 50
 
 #Creates a new stack
 def NewStack(): 
@@ -59,10 +62,17 @@ def stackLen(Stack):
 
 
 def displayStack(Stack):
+    turtle.clear()
     print("Stack Contents:")
     reverseStack = NewStack()
 
     while isEmpty(Stack) != True:
+        #lower={0, size*index}, upper={size, size*index+1, top}
+        lowerLeft = {"x": 0, "y": BOX_SIZE * (stackLen(Stack) - 1)}
+        upperRight = {"x": BOX_SIZE, "y": BOX_SIZE * stackLen(Stack)}
+
+        # drawBox()
+        drawRectangle(lowerLeft, upperRight, top(Stack))
         print(top(Stack))
         reverseStack = pushStack(reverseStack, top(Stack))
         Stack = popStack(Stack)
@@ -71,6 +81,29 @@ def displayStack(Stack):
         Stack = pushStack(Stack, top(reverseStack))
         reverseStack = popStack(reverseStack)
 
+def drawRectangle(lowerLeft, upperRight, character):
+    turtle.up()
+    turtle.goto(lowerLeft["x"], lowerLeft["y"])
+    turtle.down()
+    turtle.color('red')
+    turtle.begin_fill()
+
+    turtle.goto(lowerLeft["x"], upperRight["y"])
+    turtle.goto(upperRight["x"], upperRight["y"])
+    turtle.goto(upperRight["x"], lowerLeft["y"])
+    turtle.goto(lowerLeft["x"], lowerLeft["y"])
+
+    turtle.up()
+
+    turtle.end_fill()
+
+    turtle.color("white")
+    centerX = lowerLeft["x"] + (upperRight["x"] - lowerLeft["x"])/2
+    centerY = lowerLeft["y"] + (upperRight["y"] - lowerLeft["y"])/2
+
+    turtle.goto(centerX, centerY)
+
+    turtle.write(character)
 
 userIn = input("1. Create Stack\n2. isEmpty\n3. push\n4. pop\n5. top:\n6. exit\n")
 userStack = None
@@ -115,5 +148,6 @@ while userIn is not "6":
     
     displayStack(userStack)
     userIn = input("1. Create Stack\n2. isEmpty\n3. push\n4. pop\n5. top:\n6. exit\n")
+
 
 print("done")
