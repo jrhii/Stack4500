@@ -62,12 +62,13 @@ def stackLen(Stack):
 
 
 def displayStack(Stack):
+    #clear the last screen
     turtle.clear()
     print("Stack Contents:")
     reverseStack = NewStack()
 
     while isEmpty(Stack) != True:
-        #lower={0, size*index}, upper={size, size*index+1, top}
+        #calculate box location
         lowerLeft = {"x": 0, "y": BOX_SIZE * (stackLen(Stack) - 1)}
         upperRight = {"x": BOX_SIZE, "y": BOX_SIZE * stackLen(Stack)}
 
@@ -81,11 +82,12 @@ def displayStack(Stack):
         Stack = pushStack(Stack, top(reverseStack))
         reverseStack = popStack(reverseStack)
 
+#draws a rectangle in turely, and adds a character to the center
 def drawRectangle(lowerLeft, upperRight, character):
     turtle.up()
     turtle.goto(lowerLeft["x"], lowerLeft["y"])
     turtle.down()
-    turtle.color('red')
+    turtle.color('red', 'black')
     turtle.begin_fill()
 
     turtle.goto(lowerLeft["x"], upperRight["y"])
@@ -148,6 +150,5 @@ while userIn is not "6":
     
     displayStack(userStack)
     userIn = input("1. Create Stack\n2. isEmpty\n3. push\n4. pop\n5. top:\n6. exit\n")
-
 
 print("done")
